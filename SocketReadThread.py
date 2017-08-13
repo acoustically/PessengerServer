@@ -5,17 +5,32 @@ _buffer_size = 1024
 
 class SocketReadThread(threading.Thread):
 
-  def __init__(self, socket):
+  def __init__(self, socket, socket_list):
     threading.Thread.__init__(self)
     self._socket = socket
+    self._socket_list = socket_list
 
   def run(self):
     data_bytes = self.__recv_data()
     data_unicode = self.__data_bytes_to_unicode(data_bytes)
     #print(data_unicode)
     data_json = json.loads(data_unicode)
-    print(data_json["client"])
+    if(data_json["client"] == "windows"):
+      self._socket_list.append(self._socket)
+      print(len(self._socket_list))
+    elif(data_json["client"] == "android"):
+      self.__send_data(self._socket_list)
+      print(len(self._socket_list))
+      #TODO : send smsmessage to windows clients 
     
+  def __send_data(self, socket_list):
+    for socket in socket_list:
+      try:
+        socket.send("asgagag")
+      except:
+        socket.close()
+        socket_list.remove(socket)
+
   def __recv_data(self):
     data = b''
 
