@@ -3,7 +3,7 @@ from select import select
 import sys
 import json
 
-import SocketReadThread
+from SocketReadThread import *
 import SocketWriteThread
 
 server_socket = socket(AF_INET, SOCK_STREAM)
@@ -15,4 +15,5 @@ while(1):
   print("socket wait")
   client_socket, client_address = server_socket.accept() 
   print("socket accepted - " + client_address[0] + ":" + str(client_address[1]) + " is accepted")
-  print(str(client_socket.recv(1024), "utf-8"))
+  socket_read_thread = SocketReadThread(client_socket)
+  socket_read_thread.start()
