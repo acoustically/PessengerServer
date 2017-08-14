@@ -15,19 +15,22 @@ class SocketReadThread(threading.Thread):
     data_unicode = self.__data_bytes_to_unicode(data_bytes)
     #print(data_unicode)
     data_json = json.loads(data_unicode)
+
     if(data_json["client"] == "windows"):
       self._socket_list.append(self._socket)
       print(len(self._socket_list))
     elif(data_json["client"] == "android"):
-      self.__send_data(self._socket_list)
+      self.__send_data(self._socket_list, data_unicode)
       print(len(self._socket_list))
       #TODO : send smsmessage to windows clients 
     
-  def __send_data(self, socket_list):
+  def __send_data(self, socket_list, data):
     for socket in socket_list:
       try:
-        socket.send("asgagag")
+        socket.send(bytes(data, "utf-8"))
+        print("send data")
       except:
+        print("send error")
         socket.close()
         socket_list.remove(socket)
 
@@ -48,4 +51,3 @@ class SocketReadThread(threading.Thread):
     json_end = data_unicode.find("}") + 1
     data_unicode = data_unicode[json_begin:json_end]
     return data_unicode
-    
