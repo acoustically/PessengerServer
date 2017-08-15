@@ -20,9 +20,13 @@ class SocketReadThread(threading.Thread):
       self._socket_list.append(self._socket)
       print(len(self._socket_list))
     elif(data_json["client"] == "android"):
-      self.__send_data(self._socket_list, data_unicode)
-      print(len(self._socket_list))
-      #TODO : send smsmessage to windows clients 
+      if(data_json["action"] == "receiveSmsMessage"):
+        self.__send_data(self._socket_list, data_unicode)
+        print(len(self._socket_list))
+      elif(data_json["action"] == "userValidation"):
+        self._socket.send(bytes(data_unicode, "utf-8"))
+        self._socket.close()
+        print("test user validation")
     
   def __send_data(self, socket_list, data):
     for socket in socket_list:
