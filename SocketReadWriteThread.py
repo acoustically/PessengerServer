@@ -18,8 +18,14 @@ class SocketReadWriteThread(threading.Thread):
     data_json = json.loads(data_unicode)
 
     if(data_json["client"] == "windows"):
-      self._socket_list.append(self._socket)
-      print(len(self._socket_list))
+      recode = self.__query_account(data_json["phoneNumber"], data_json["password"])
+      if(any(recode)):
+        self.__send(b'1')
+        self._socket_list.append(self._socket)
+        print(len(self._socket_list))
+      else:
+        self.__send(b"0")
+        print("log in fail : " + data_json["phoneNumber"])
     elif(data_json["client"] == "android"):
       if(data_json["action"] == "receiveSmsMessage"):
         self.__send_to_all(self._socket_list, data_unicode)
@@ -84,6 +90,18 @@ class SocketReadWriteThread(threading.Thread):
     connection = self.__connect_db()
     cursor = connection.cursor()
     sql = "select phone_number from users where phone_number=\'" + phone_number + "\';"
+    print("sql : " + sql)
+    cursor.execute(sql)
+    recode = cursor.fetchall()
+    print("result : ")
+    print(recode)
+    connection.close()
+    return recode
+
+  def __query_account(self, phone_number, password):
+    connection = self.__connect_db()
+    cursor = connection.cursor()
+    sql = "select phone_number from users where phone_number=\'" + phone_number + "\' and password=\'" + password + "\';"
     print("sql : " + sql)
     cursor.execute(sql)
     recode = cursor.fetchall()
