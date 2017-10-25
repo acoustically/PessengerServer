@@ -1,15 +1,12 @@
 from flask import Flask, request, jsonify
 from src.routes.user import user
 import logging
-from src.python_logger.logger import Logger
-import os
-import inspect
+from src.logger import Logger
 from src.rds_connector import Connector
 
 connector = Connector()
 
-log_file_path = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))+"/log.txt"
-logger = Logger(log_file_path)
+logger = Logger()
 
 app = Flask(__name__)
 app.logger.disabled = True

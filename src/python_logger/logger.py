@@ -12,8 +12,12 @@ class Logger():
     
   @dispatch(str, str)
   def log(self, tag, message):
-    log_message = "[" + tag + "] : " + message
-    self.log(log_message)    
+    log_message = self.__get_time() + "[" + tag + "] : " + message
+    self.log(log_message)
+
+  def log_error(self, location, message):
+    log_message = self.__get_time() + "[Error] : " + location + " / " + message
+    self.log(log_message)
 
   def request_log(self, method, url):
     log_message = self.__get_time() + method + " / " + url
