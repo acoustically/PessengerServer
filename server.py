@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from src.routes.user import user
 import logging
-from src.python_logger.logger import Logger
+from src.logger.logger import Logger
 import os
 import inspect
 from src.rds_connector import Connector
@@ -28,4 +28,4 @@ def authenticate_token():
 app.register_blueprint(user, url_prefix="/user")
 
 if __name__ == "__main__":
-  app.run()
+  app.run(host="0.0.0.0")

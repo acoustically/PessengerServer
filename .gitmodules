@@ -1,0 +1,6 @@
+[submodule "src/logger"]
+	path = src/logger
+	url = http://github.com/acoustically/python_logger
+[submodule "src/mysql_connector"]
+	path = src/mysql_connector
+	url = http://github.com/acoustically/python_mysql_connector
