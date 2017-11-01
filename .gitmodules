@@ -1,0 +1,3 @@
+[submodule "src/modules/python_mysql_connector"]
+	path = src/modules/python_mysql_connector
+	url = git@github.com:acoustically/python_mysql_connector.git

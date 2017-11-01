@@ -1,4 +1,4 @@
-import src.python_mysql_connector.mysql_connector as mysql
+import src.modules.python_mysql_connector.mysql_connector as mysql
 
 class Connector(mysql.Connector):
   def __init__(self):
