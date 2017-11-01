@@ -12,7 +12,7 @@ def new():
   
 @client.route("/<phone_number>")
 def show(phone_number):
-  sql = "select name, is_powered from clients where phone_number=\"%s\";" % phone_number
+  sql = "select name, is_connected from clients where phone_number=\"%s\";" % phone_number
   result, err = connector.query(sql)
   if err:
     return jsonify(clients=list())

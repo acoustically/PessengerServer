@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from src.routes.user import user
 from src.routes.client import client
+from src.routes.sms_message import sms_message
 from src.rds_connector import Connector
 
 connector = Connector()
@@ -14,7 +15,7 @@ def authenticate_token():
 
 app.register_blueprint(user, url_prefix="/user")
 app.register_blueprint(client, url_prefix="/client")
-
+app.register_blueprint(sms_message, url_prefix="/sms-message")
 
 
 if __name__ == "__main__":
