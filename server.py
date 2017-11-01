@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.before_request
 def authenticate_token():
-  if request.headers.get("Token") != "token acoustically":
+  if request.headers.get("Authorization") != "Token acoustically":
     return jsonify(response="error", message="token is invalid")
 
 app.register_blueprint(user, url_prefix="/user")

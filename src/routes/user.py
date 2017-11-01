@@ -7,13 +7,13 @@ connector = Connector()
 
 @user.route("/new", methods=["POST"])
 def new():
-  json = requset.get_json()
+  json = request.get_json()
   phone_number = json["phone_number"]
   password = json["password"]
   sql = "insert into users(phone_number, password) values(\"%s\", \"%s\");" % (phone_number, password)
   result, err = connector.query(sql)
   if err:
-    return jsonify(response="error", error=err["message"])
+    return jsonify(response="fail", error=err)
   else:
     return jsonify(response="success")
   
@@ -22,7 +22,7 @@ def show(phone_number):
   sql = "select phone_number from users where phone_number=\"%s\";" % phone_number
   result, err = connector.query(sql)
   if err:
-    return jsonify(response="error", error=err["message"])
+    return jsonify(response="fail", error=err)
   else:
-    return jsonify(user=result)
+    return jsonify(response="success")
  
