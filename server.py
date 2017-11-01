@@ -14,4 +14,4 @@ def authenticate_token():
 app.register_blueprint(user, url_prefix="/user")
 
 if __name__ == "__main__":
-  app.run()
+  app.run(host="0.0.0.0")
