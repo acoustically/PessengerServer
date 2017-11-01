@@ -6,20 +6,11 @@ from src.rds_connector import Connector
 
 connector = Connector()
 
-logger = Logger()
-
 app = Flask(__name__)
-app.logger.disabled = True
-log = logging.getLogger('werkzeug')
-log.disabled = True
-
-@app.before_request
-def before_request():
-  logger.request_log(request.method, request.url)
 
 @app.before_request
 def authenticate_token():
-  if request.headers.get("token") != "acoustically":
+  if request.headers.get("Token") != "token acoustically":
     return jsonify(response="error", message="token is invalid")
 
 app.register_blueprint(user, url_prefix="/user")
